@@ -1,0 +1,68 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  compression:
+    enabled: true
+    min-response-size: 1024
+
+app:
+  frontend-url: ${FRONTEND_URL:http://2.24.15.95,https://2.24.15.95}
+  jwt:
+    secret: ${JWT_SECRET:CHANGE_ME_IN_PRODUCTION}
+    expiration-hours: ${JWT_EXPIRATION_HOURS:12}
+  mail:
+    from: ${MAIL_USERNAME:noreply@antigone.com}
+    from-name: Antigone RH
+    enabled: true
+  upload:
+    dir: /app/uploads
+  google:
+    drive:
+      service-account-key-path: ${GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY_PATH:/app/service-account.json}
+      client-viewer-key-path: ${GOOGLE_DRIVE_CLIENT_VIEWER_KEY_PATH:/app/client-viewer-service-account.json}
+      tokens-directory-path: /app/tokens
+      parent-folder-id: ${GOOGLE_DRIVE_PARENT_FOLDER_ID:}
+      redirect-uri: ${GOOGLE_DRIVE_REDIRECT_URI:https://2.24.15.95/api/media-plans/google-drive/callback}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/rh_database}
+    username: ${DB_USERNAME:rh_user}
+    password: ${DB_PASSWORD:CHANGE_ME}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+          fetch_size: 50
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+logging:
+  level:
+    root: WARN
+    com.antigone: INFO
+  file:
+    name: /app/logs/rh-application.log
+    max-size: 10MB
+    max-history: 10
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false

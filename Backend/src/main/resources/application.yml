@@ -1,0 +1,74 @@
+server:
+  port: ${PORT:8080}
+
+app:
+  # CORS allowed origins — set FRONTEND_URL on production servers
+  # Locally allow Projets (3000) + RH (3001) and Vite ports (5173/5174)
+  # Production: http://2.24.15.95 (Hostinger IP)
+  frontend-url: ${FRONTEND_URL:${FRONTEND_BASE_URL:http://localhost:3000,http://localhost:3001,http://localhost:5173,http://localhost:5174,http://2.24.15.95,https://2.24.15.95}}
+  jwt:
+    # JWT_SECRET must be at least 32 characters. Override via env var in production (Render).
+    secret: ${JWT_SECRET:antigone-rh-local-dev-secret-key-change-in-prod}
+    expiration-hours: ${JWT_EXPIRATION_HOURS:12}
+  mail:
+    from: ${MAIL_USERNAME:yosr.khriji27@gmail.com}
+    enabled: true
+  upload:
+    dir: uploads/justificatifs
+  google:
+    drive:
+      service-account-key-path: ${GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY_PATH:service-account.json}
+      client-viewer-key-path: ${GOOGLE_DRIVE_CLIENT_VIEWER_KEY_PATH:client-viewer-service-account.json}
+      tokens-directory-path: tokens
+      # Optional: Parent folder ID where all media plan folders will be created
+      parent-folder-id: ${GOOGLE_DRIVE_PARENT_FOLDER_ID:1Rk6jabDXelPFK_P1jkvABVhwf-hwnQdC}
+      # Must match the redirect URI registered in Google Cloud Console
+      redirect-uri: ${GOOGLE_DRIVE_REDIRECT_URI:http://localhost:8080/api/media-plans/google-drive/callback}
+
+spring:
+  datasource:
+    # DATABASE_URL on Render must be in JDBC format:
+    #   jdbc:postgresql://host:5432/dbname
+    # (add the jdbc: prefix to the postgresql:// URL Render gives you)
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/antigone_rh}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:Karim123}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: ${MAIL_USERNAME:yosr.khriji27@gmail.com}
+    # BREVO_API_KEY is the SMTP key from your Brevo account
+    password: ${BREVO_API_KEY:fbgodopejvihkutw}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    test-connection: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false

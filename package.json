@@ -1,0 +1,15 @@
+{
+  "name": "rh-application-monorepo",
+  "private": true,
+  "workspaces": [
+    "frontend-projects",
+    "frontend-rh"
+  ],
+  "scripts": {
+    "dev:projects": "npm run dev -w frontend-projects",
+    "dev:rh": "npm run dev -w frontend-rh",
+    "build:projects": "npm run build -w frontend-projects",
+    "build:rh": "npm run build -w frontend-rh",
+    "build:all": "npm run build:projects && npm run build:rh"
+  }
+}
