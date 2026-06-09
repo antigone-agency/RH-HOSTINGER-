@@ -1,44 +1,92 @@
-# Lock files (tracked for CI/CD reproducibility)
-# package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# =========================
+# Secrets et environnement
+# =========================
+.env
+.env.*
+!.env.example
 
-# Node modules
+secrets/
+Backend/service-account.json
+Backend/client-viewer-service-account.json
+Backend/tokens/
+**/service-account.json
+**/client-viewer-service-account.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Google credentials
+application_default_credentials.json
+credentials.json
+token.json
+tokens/
+
+# =========================
+# Node / Frontend
+# =========================
 node_modules/
-
-# Vite
-.vite/
+**/node_modules/
 dist/
+**/dist/
+.vite/
+**/.vite/
 
-# Maven
+# Garder les lock files
+# package-lock.json doit rester suivi
+# yarn.lock doit rester suivi si Yarn est utilisé
+# pnpm-lock.yaml doit rester suivi si pnpm est utilisé
+
+# =========================
+# Java / Maven
+# =========================
 Backend/target/
+**/target/
 *.jar
+*.war
+*.class
 
+# =========================
+# Uploads et données runtime
+# =========================
+Backend/uploads/
+uploads/
+logs/
+*.log
+
+# =========================
+# Dumps et sauvegardes
+# =========================
+*.sql
+*.dump
+*.backup
+backups/
+
+# =========================
 # IDE
+# =========================
 .idea/
-*.iml
 .vscode/
+*.iml
 *.swp
 *.swo
 
-# OS
+# =========================
+# Système
+# =========================
 .DS_Store
 Thumbs.db
 
-# Env
-.env
-.env.local
-.env.*.local
+# =========================
+# Docker local
+# =========================
+docker-compose.override.yml
 
-# Logs
-*.log
-Frontend/package-lock.json
-AgentDesktop/node_modules/
-Backend/target/
-README_AI_IDEAS.md
-
-# Secrets and local credentials
-Backend/service-account.json
-Backend/client-viewer-service-account.json
-Backend/fix_json.py
-Backend/tokens/
+# =========================
+# Fichiers temporaires
+# =========================
+*.tmp
+*.temp
+*.bak
+*~
