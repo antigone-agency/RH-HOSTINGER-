@@ -70,11 +70,9 @@ const AppSwitchButton: React.FC = () => {
             : 'bg-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white cursor-pointer'
         }`}
       >
-        <span aria-hidden="true">💼</span>
         <span>Projets</span>
       </button>
 
-      <span aria-hidden="true" className="w-[1px] h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
 
       <button
         type="button"
@@ -89,11 +87,9 @@ const AppSwitchButton: React.FC = () => {
             : 'bg-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white cursor-pointer'
         }`}
       >
-        <span aria-hidden="true">👥</span>
         <span>RH</span>
       </button>
 
-      <span aria-hidden="true" className="w-[1px] h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
 
       {/* Bouton réduire */}
       <button

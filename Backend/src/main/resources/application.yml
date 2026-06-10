@@ -11,7 +11,8 @@ app:
     secret: ${JWT_SECRET:antigone-rh-local-dev-secret-key-change-in-prod}
     expiration-hours: ${JWT_EXPIRATION_HOURS:12}
   mail:
-    from: ${MAIL_USERNAME:yosr.khriji27@gmail.com}
+    from: ${MAIL_USERNAME}
+    brevo-api-key: ${BREVO_API_KEY}
     enabled: true
   upload:
     dir: uploads/justificatifs
@@ -48,20 +49,6 @@ spring:
   sql:
     init:
       mode: always
-
-  mail:
-    host: smtp-relay.brevo.com
-    port: 587
-    username: ${MAIL_USERNAME:yosr.khriji27@gmail.com}
-    # BREVO_API_KEY is the SMTP key from your Brevo account
-    password: ${BREVO_API_KEY:fbgodopejvihkutw}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-    test-connection: false
 
   servlet:
     multipart:

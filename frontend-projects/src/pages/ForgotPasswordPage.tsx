@@ -308,7 +308,7 @@ const ForgotPasswordPage: React.FC = () => {
         pointerEvents: 'none',
       }}>
         <div style={{ position: 'absolute', left: '20px', top: '14px', display: 'flex', alignItems: 'center', pointerEvents: 'auto' }}>
-          <img src="/antigone-icon.svg" alt="Antigone" style={{ width: '80px', height: '80px' }} />
+          <img src={`${import.meta.env.BASE_URL}antigone-icon.svgg`} alt="Antigone" style={{ width: '80px', height: '80px' }} />
         </div>
         <div style={{ pointerEvents: 'auto' }}>
           <LightPullThemeSwitcher />

@@ -514,7 +514,7 @@ const LoginPage: React.FC = () => {
           display: 'flex', alignItems: 'center',
           pointerEvents: 'auto',
         }}>
-          <img src="/antigone-icon.svg" alt="Antigone" style={{ width: '80px', height: '80px' }} />
+          <img src={`${import.meta.env.BASE_URL}antigone-icon.svg`} alt="Antigone" style={{ width: '80px', height: '80px' }} />
         </div>
         {/* Switcher thème haut-centre */}
         <div style={{ pointerEvents: 'auto' }}>

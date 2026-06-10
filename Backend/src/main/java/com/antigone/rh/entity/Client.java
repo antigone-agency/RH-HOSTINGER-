@@ -3,6 +3,8 @@ package com.antigone.rh.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -61,11 +63,21 @@ public class Client {
     private String logoPath;
 
     /** Original filename as uploaded by the user */
-    private String fileName;
+/** Original filename as uploaded by the user */
+private String fileName;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime dateCreation;
+@OneToMany(
+    mappedBy = "client",
+    cascade = CascadeType.REMOVE,
+    orphanRemoval = true
+)
+@ToString.Exclude
+@EqualsAndHashCode.Exclude
+@Builder.Default
+private List<MediaPlanAssignment> mediaPlanAssignments = new ArrayList<>();
 
+@Column(nullable = false, updatable = false)
+private LocalDateTime dateCreation;
     @PrePersist
     protected void onCreate() {
         this.dateCreation = LocalDateTime.now();

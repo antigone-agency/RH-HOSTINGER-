@@ -727,7 +727,7 @@ const Sidebar: React.FC = () => {
           }}
           aria-label="Ouvrir l'accueil"
         >
-          <img src="/antigone-icon.svg" alt="Antigone" className="h-8 w-8 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}antigone-icon.svg`} alt="Antigone" className="h-8 w-8 object-contain" />
         </button>
 
         <div className="pc-rail-divider" />
