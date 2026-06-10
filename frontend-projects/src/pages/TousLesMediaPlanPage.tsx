@@ -762,14 +762,24 @@ const TousLesMediaPlanPage: React.FC = () => {
                         return (
                             <label key={emp.id}
                                 className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${alreadyAssigned
-                                    ? 'border-green-300 bg-green-50 dark:bg-green-900/10 dark:border-green-700'
+                                    ? 'border-green-300 bg-green-50 dark:bg-green-900/10 dark:border-green-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/10 dark:hover:border-red-700'
                                     : selectedEmployeeIds.includes(emp.id)
                                         ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/10'
                                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                     }`}>
                                 <input type="checkbox" checked={alreadyAssigned || selectedEmployeeIds.includes(emp.id)}
-                                    disabled={alreadyAssigned} onChange={() => !alreadyAssigned && toggleEmployee(emp.id)}
-                                    className="rounded border-gray-300 text-brand-500 focus:ring-brand-500" />
+                                    onChange={() => {
+                                        if (alreadyAssigned) {
+                                            const assignment = existingAssignments.find(a => a.employeId === emp.id);
+                                            if (assignment) {
+                                                setShowAssignModal(false);
+                                                handleRemoveAssignment(assignment.id);
+                                            }
+                                        } else {
+                                            toggleEmployee(emp.id);
+                                        }
+                                    }}
+                                    className={`rounded border-gray-300 focus:ring-brand-500 ${alreadyAssigned ? 'text-green-500 cursor-pointer' : 'text-brand-500'}`} />
                                 <div className="flex-1">
                                     <p className="text-sm font-medium text-gray-900 dark:text-white">{emp.prenom} {emp.nom}</p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">{emp.email}</p>
