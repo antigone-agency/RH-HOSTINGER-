@@ -117,8 +117,8 @@ const ClientAccueilPage: React.FC = () => {
 
         {/* Carte Fichiers / Drive */}
         {hasPage('FICHIERS') && (
-          <div 
-            onClick={() => driveLink ? window.open(driveLink, '_blank', 'noopener,noreferrer') : navigate('/client/fichiers')}
+          <div
+	    onClick={() => navigate('/client/fichiers')} 
             className="glass-card group relative cursor-pointer overflow-hidden rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-brand-900/20"
           >
             <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-50 to-green-100 text-green-600 shadow-inner dark:from-green-900/40 dark:to-green-800/20 dark:text-green-400 transition-transform group-hover:scale-110">
@@ -129,7 +129,7 @@ const ClientAccueilPage: React.FC = () => {
               Accédez instantanément à votre dossier Drive sécurisé et à vos livrables.
             </p>
             <div className="absolute bottom-8 right-8 text-green-500 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-1">
-              <HiOutlineExternalLink size={24} />
+              <HiOutlineArrowRight size={24} />
             </div>
           </div>
         )}
