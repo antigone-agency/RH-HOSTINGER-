@@ -149,8 +149,12 @@ public class MediaPlanService {
                 }
             }
 
-            // Create or reuse: [parent] / [clientName] / [Month Year]
-            driveLink = googleDriveService.getOrCreateClientMonthFolder(clientName, folderDate);
+            // Look up the pre-built Drive folder: ClientName / Year / Month / Mediaplan
+            driveLink = googleDriveService.getExistingMediaPlanFolderLink(clientName, folderDate);
+            if (driveLink == null) {
+                log.warn("Pre-built Drive folder not found for client '{}' / date '{}'. Falling back to getOrCreate.", clientName, folderDate);
+                driveLink = googleDriveService.getOrCreateClientMonthFolder(clientName, folderDate);
+            }
         } catch (IOException e) {
             log.error("Failed to create Google Drive folder: {}", e.getMessage());
             throw new RuntimeException("Erreur Google Drive: " + e.getMessage());

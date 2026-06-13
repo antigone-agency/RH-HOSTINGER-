@@ -138,11 +138,28 @@ public class AgentController {
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadAgent() {
         try {
-            Path filePath = Paths.get("uploads/agent/AgentDesktop-Setup.exe").toAbsolutePath().normalize();
-            if (!Files.exists(filePath)) {
-                return ResponseEntity.notFound().build();
+            // Try environment variable first, fallback to relative path
+            String uploadDir = System.getenv("AGENT_UPLOADS_DIR");
+            Path filePath;
+            
+            // Try multiple possible paths
+            String[] possiblePaths = {
+                "/var/www/solutions-web/rh-application/Backend/uploads/agent/AgentDesktop-Setup.exe",
+                "uploads/agent/AgentDesktop-Setup.exe"
+            };
+            
+            filePath = null;
+            for (String path : possiblePaths) {
+                Path candidate = Paths.get(path).toAbsolutePath().normalize();
+                if (Files.exists(candidate)) {
+                    filePath = candidate;
+                    break;
+                }
             }
-            Resource resource = new UrlResource(filePath.toUri());
+            
+            if (filePath == null) {
+                return ResponseEntity.notFound().build();
+            }            Resource resource = new UrlResource(filePath.toUri());
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AgentDesktop-Setup.exe\"")

@@ -212,7 +212,7 @@ function setupIPC() {
 function getRuntimeConfig() {
   const envServerUrl = process.env.AGENT_SERVER_URL?.trim();
   const storedServerUrl = config?.get('serverUrl');
-  const defaultServerUrl = app.isPackaged ? 'https://rh-antigone.onrender.com' : 'http://localhost:8080';
+  const defaultServerUrl = app.isPackaged ? 'http://2.24.15.95' : 'http://localhost:8080';
 
   return {
     appVersion: app.getVersion(),

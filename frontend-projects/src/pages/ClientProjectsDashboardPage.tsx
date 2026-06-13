@@ -7,11 +7,11 @@ import { clientService } from '../api/clientService';
 import { Projet } from '../types';
 
 const statutColors: Record<string, string> = {
-    PLANIFIE: 'bg-gray-100 text-gray-600',
-    EN_COURS: 'bg-orange-50 text-orange-600',
-    CLOTURE: 'bg-[#1D9E75]/10 text-[#1D9E75]',
-    CLOTURE_INCOMPLET: 'bg-yellow-50 text-yellow-600',
-    ANNULE: 'bg-red-50 text-red-600',
+    PLANIFIE: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
+    EN_COURS: 'bg-orange-50 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400',
+    CLOTURE: 'bg-[#1D9E75]/10 text-[#1D9E75] dark:bg-[#1D9E75]/25 dark:text-[#2ee0ab]',
+    CLOTURE_INCOMPLET: 'bg-yellow-50 text-yellow-600 dark:bg-yellow-950/30 dark:text-yellow-400',
+    ANNULE: 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400',
 };
 const progressBarColors: Record<string, string> = {
     PLANIFIE: 'bg-gray-300',
@@ -97,19 +97,19 @@ const ClientProjectsDashboardPage: React.FC = () => {
     );
 
     return (
-        <div className="space-y-8 bg-[#F5F4F1] min-h-screen p-2 sm:p-4 -m-4 sm:-m-6 lg:-m-8">
+        <div className="space-y-8 bg-[#F5F4F1] dark:bg-gray-950 min-h-screen p-2 sm:p-4 -m-4 sm:-m-6 lg:-m-8">
             <div className="max-w-[1200px] mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col gap-6">
                     <div className="flex items-center justify-between mb-1">
                         <div className="flex flex-col justify-center">
-                            <h1 className="text-2xl font-medium text-gray-900 tracking-tight">Mes Projets</h1>
+                            <h1 className="text-2xl font-medium text-gray-900 dark:text-white tracking-tight">Mes Projets</h1>
                             <div className="flex items-center gap-2 mt-1.5">
                                 <span className="text-[13px] font-medium text-[#E8521A] bg-[#E8521A]/10 px-2.5 py-0.5 rounded-[6px]">
                                     {clientNom}
                                 </span>
                                 <span className="text-gray-300">•</span>
-                                <p className="text-[13px] text-gray-500">Vue de vos projets en cours</p>
+                                <p className="text-[13px] text-gray-500 dark:text-gray-400">Vue de vos projets en cours</p>
                             </div>
                         </div>
                         {/* Google Drive button */}
@@ -141,17 +141,17 @@ const ClientProjectsDashboardPage: React.FC = () => {
 
                     {/* KPIs */}
                     <div className="flex items-center gap-4">
-                        <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                            <p className="text-xs text-gray-500">Projets</p>
-                            <p className="text-lg font-medium text-gray-900">{projets.length}</p>
+                        <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Projets</p>
+                            <p className="text-lg font-medium text-gray-900 dark:text-white">{projets.length}</p>
                         </div>
-                        <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                            <p className="text-xs text-gray-500">En cours</p>
-                            <p className="text-lg font-medium text-gray-900">{projets.filter(p => p.statut === 'EN_COURS').length}</p>
+                        <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">En cours</p>
+                            <p className="text-lg font-medium text-gray-900 dark:text-white">{projets.filter(p => p.statut === 'EN_COURS').length}</p>
                         </div>
-                        <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                            <p className="text-xs text-gray-500">Clôturés</p>
-                            <p className="text-lg font-medium text-gray-900">{projets.filter(p => p.statut === 'CLOTURE').length}</p>
+                        <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Clôturés</p>
+                            <p className="text-lg font-medium text-gray-900 dark:text-white">{projets.filter(p => p.statut === 'CLOTURE').length}</p>
                         </div>
                     </div>
                 </div>
@@ -204,7 +204,7 @@ const ClientProjectsDashboardPage: React.FC = () => {
                                     </div>
                                     
                                     {/* Progress bar */}
-                                    <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden mt-1 mb-2">
+                                    <div className="w-full h-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mt-1 mb-2">
                                         <div className={`h-full ${progressBarColors[projet.statut] || 'bg-gray-400'}`} style={{ width: taches ? `${pct}%` : '0%' }}></div>
                                     </div>
                                     

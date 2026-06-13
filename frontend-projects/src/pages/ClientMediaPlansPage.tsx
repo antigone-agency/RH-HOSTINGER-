@@ -527,18 +527,18 @@ const ClientMediaPlansPage: React.FC = () => {
     const activeBatch = (approvedBatches as PlanBatch[]).find(b => b.key === selectedBatchKey);
 
     return (
-        <div className="space-y-8 bg-[#F5F4F1] min-h-screen p-2 sm:p-4 -m-4 sm:-m-6 lg:-m-8">
+        <div className="space-y-8 bg-[#F5F4F1] dark:bg-gray-950 min-h-screen p-2 sm:p-4 -m-4 sm:-m-6 lg:-m-8">
             {/* Header / Hero Zone */}
             <div className="flex flex-col gap-6">
                 <div className="flex items-center justify-between mb-1">
                     <div className="flex flex-col justify-center">
-                        <h1 className="text-2xl font-medium text-gray-900 tracking-tight">Mes Media Plans</h1>
+                        <h1 className="text-2xl font-medium text-gray-900 dark:text-white tracking-tight">Mes Media Plans</h1>
                         <div className="flex items-center gap-2 mt-1.5">
                             <span className="text-[13px] font-medium text-[#E8521A] bg-[#E8521A]/10 px-2.5 py-0.5 rounded-[6px]">
                                 {clientNom}
                             </span>
                             <span className="text-gray-300">•</span>
-                            <p className="text-[13px] text-gray-500">Consultez le déroulement de vos campagnes</p>
+                            <p className="text-[13px] text-gray-500 dark:text-gray-400">Consultez le déroulement de vos campagnes</p>
                         </div>
                     </div>
                     {driveLoading ? (
@@ -569,17 +569,17 @@ const ClientMediaPlansPage: React.FC = () => {
 
                 {/* Metrics Row */}
                 <div className="flex items-center gap-4">
-                    <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                        <p className="text-xs text-gray-500">Total de plans</p>
-                        <p className="text-lg font-medium text-gray-900">{totalPlansCount}</p>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Total de plans</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{totalPlansCount}</p>
                     </div>
-                    <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                        <p className="text-xs text-gray-500">Plans approuvés</p>
-                        <p className="text-lg font-medium text-gray-900">{approvedPlans.length}</p>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Plans approuvés</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{approvedPlans.length}</p>
                     </div>
-                    <div className="flex-1 bg-white rounded-[12px] border border-gray-200 p-4 shadow-sm">
-                        <p className="text-xs text-gray-500">Dernière mise à jour</p>
-                        <p className="text-lg font-medium text-gray-900">{lastUpdateDate || '—'}</p>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-[12px] border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Dernière mise à jour</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{lastUpdateDate || '—'}</p>
                     </div>
                 </div>
             </div>
@@ -593,7 +593,7 @@ const ClientMediaPlansPage: React.FC = () => {
                         </div>
                         <div>
                             <h2 className="text-lg font-medium text-gray-900 dark:text-white">En attente de votre approbation</h2>
-                            <p className="text-xs text-gray-500">Veuillez approuver ou refuser chaque ligne ci-dessous.</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Veuillez approuver ou refuser chaque ligne ci-dessous.</p>
                         </div>
                     </div>
 
@@ -716,7 +716,7 @@ const ClientMediaPlansPage: React.FC = () => {
                                                 </div>
                                             </div>
                                             {/* Progress bar */}
-                                            <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden mt-1">
+                                            <div className="w-full h-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mt-1">
                                                 <div className={`h-full ${isApproved ? 'bg-[#1D9E75]' : 'bg-orange-400'}`} style={{ width: '100%' }}></div>
                                             </div>
                                         </div>
@@ -747,7 +747,7 @@ const ClientMediaPlansPage: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <button
                                 onClick={() => setViewState('BATCHES')}
-                                className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900"
+                                className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                             >
                                 ← Retour
                             </button>

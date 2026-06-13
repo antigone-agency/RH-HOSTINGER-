@@ -124,6 +124,98 @@ public class GoogleDriveService {
     }
 
     /**
+     * Looks up (WITHOUT creating) the Drive link for an existing MediaPlan folder.
+     * Traverses the hierarchy created by generateFullClientStructure:
+     *   [parent] / [ClientName] / [Year] / [MonthName] / Mediaplan
+     *
+     * Returns the webViewLink if the full path exists, or null if any folder is missing.
+     */
+    public String getExistingMediaPlanFolderLink(String clientName, LocalDate date) {
+        try {
+            ensureInitialized();
+
+            String safeClientName = clientName.replaceAll("[\\\\/:*?\"<>|]", "_").trim();
+            String yearStr = String.valueOf(date.getYear());
+            String[] frenchMonths = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
+            String monthName = frenchMonths[date.getMonthValue() - 1];
+
+            log.info("Looking up Drive path: [root:{}] / [{}] / [{}] / [{}] / Mediaplan",
+                    parentFolderId, safeClientName, yearStr, monthName);
+
+            // Step 1: Find client folder
+            String clientFolderId = findFolder(safeClientName, parentFolderId);
+            if (clientFolderId == null) {
+                log.warn("Drive: Client folder '{}' not found — no link assigned.", safeClientName);
+                return null;
+            }
+
+            // Step 2: Find year folder inside client
+            String yearFolderId = findFolder(yearStr, clientFolderId);
+            if (yearFolderId == null) {
+                log.warn("Drive: Year folder '{}' not found under client '{}'.", yearStr, safeClientName);
+                return null;
+            }
+
+            // Step 3: Find month folder inside year
+            String monthFolderId = findFolder(monthName, yearFolderId);
+            if (monthFolderId == null) {
+                log.warn("Drive: Month folder '{}' not found under year '{}'.", monthName, yearStr);
+                return null;
+            }
+
+            // Step 4: Find Mediaplan folder inside month (created as "Mediaplan" by generateFullClientStructure)
+            String mediaPlanFolderId = findFolder("Mediaplan", monthFolderId);
+            if (mediaPlanFolderId == null) {
+                log.warn("Drive: 'Mediaplan' folder not found under month '{}' / year '{}'.", monthName, yearStr);
+                return null;
+            }
+
+            // Fetch and return the webViewLink
+            File mediaPlanFolder = driveService.files().get(mediaPlanFolderId)
+                    .setFields("id, webViewLink")
+                    .execute();
+
+            log.info("Drive: Found existing Mediaplan folder link: {}", mediaPlanFolder.getWebViewLink());
+            return mediaPlanFolder.getWebViewLink();
+
+        } catch (Exception e) {
+            log.error("Drive: Failed to look up Mediaplan folder for client '{}': {}", clientName, e.getMessage());
+            return null;
+        }
+    }
+
+
+    /**
+     * Finds an existing folder by name inside the given parent.
+     * Returns the folder ID if found, or null if not found. Does NOT create.
+     */
+    private String findFolder(String folderName, String parentId) throws IOException {
+
+        String escapedName = folderName.replace("'", "\\'");
+        String query = "mimeType='application/vnd.google-apps.folder'"
+                + " and name='" + escapedName + "'"
+                + " and trashed=false";
+
+        if (parentId != null && !parentId.isEmpty()) {
+            query += " and '" + parentId + "' in parents";
+        }
+
+        com.google.api.services.drive.model.FileList result = driveService.files().list()
+                .setQ(query)
+                .setFields("files(id, name)")
+                .setPageSize(1)
+                .execute();
+
+        if (result.getFiles() != null && !result.getFiles().isEmpty()) {
+            String existingId = result.getFiles().get(0).getId();
+            log.debug("Found existing folder '{}' (ID: {})", folderName, existingId);
+            return existingId;
+        }
+        return null;
+    }
+
+    /**
      * Finds an existing folder by name inside the given parent, or creates it.
      * Returns the folder ID.
      */

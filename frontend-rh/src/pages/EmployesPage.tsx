@@ -1363,7 +1363,7 @@ const EmployesPage: React.FC = () => {
                 className="h-4 w-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500 dark:border-gray-600"
               />
               <span className="text-theme-sm font-medium text-gray-700 dark:text-gray-300">
-                Créer un compte utilisateur et lui affecter des rôles
+               affecter des rôles
               </span>
             </label>
             {createCompte && (
